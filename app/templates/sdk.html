@@ -42,7 +42,8 @@
 
 fetch("/api/v1/tokenapi/fetchGuestToken").then(response => response.json()).then(data => 
     supersetEmbeddedSdk.embedDashboard({
-    id: "56277408-9839-4abc-8c7a-eddece4a0b90", // given by the Superset embedding UI
+    //id: "56277408-9839-4abc-8c7a-eddece4a0b90", // given by the Superset embedding UI
+    id: "e430c09b-df6f-4a31-820a-712aca3d128c", // given by the Superset embedding UI
   supersetDomain: "https://superset.startuptrend.in",
   mountPoint: document.getElementById("dashboard-container"), // any html element that can contain an iframe,
   iframeAttributes: {"id": "my-test-frame", "className": "my-test-frame-class"},

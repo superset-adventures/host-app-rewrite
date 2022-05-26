@@ -33,7 +33,8 @@ class MyView(BaseView):
         # and render template with param
         # param1 = 'Goodbye %s' % (param1)
         username = g.user.username
-        params = {"username": username, "redirect": "https://superset.startuptrend.in/superset/dashboard/10/?preselect_filters=%7B%7D&standalone=true"}
+        #params = {"username": username, "redirect": "https://superset.startuptrend.in/superset/dashboard/10/?preselect_filters=%7B%7D&standalone=true"}
+        params = {"username": username, "redirect": "https://superset.startuptrend.in/superset/dashboard/11/?standalone=true"}
         resp = requests.get(SUPERSET_HOST+GENERATE_TOKEN, params=params)
         token = resp.json()['token']
         token_login_url = SUPERSET_HOST + TOKEN_LOGIN + f"?token={token}"
@@ -48,18 +49,21 @@ class TokenAPI(BaseApi):
         body = {
             "resources": [
                 {
-                    "id": "10",
+                    #"id": "10",
+                    "id": "11",
                     "type": "dashboard"
                 }
             ],
             "rls": [
+                #{"clause": 'name="general"'}
             ],
             "user": {
-                "first_name": "Swapnil",
-                "last_name": "Jariwala",
-                "username": "swapniljariwala"
+                "first_name": g.user.first_name,
+                "last_name": g.user.last_name,
+                "username": g.user.username 
             }
         }
+        print(f"username: {g.user.username}, {g.user.first_name}, {g.user.last_name}")
         token = get_guest_tokens(body)
         print("*"*100)
         print(token)
@@ -68,8 +72,9 @@ class TokenAPI(BaseApi):
 appbuilder.add_api(TokenAPI)
 
 appbuilder.add_view_no_menu(MyView())
-appbuilder.add_link("SDK", href='/dashboards/sdk', category='Demos')
+
 appbuilder.add_link("Custom Login", href='/dashboards/custom_login', category='Demos')
+appbuilder.add_link("SDK", href='/dashboards/sdk', category='Demos')
 """
     Create your Model based REST API::
 
